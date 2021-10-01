@@ -1,0 +1,22 @@
+.gridContainer {
+    max-width: 1600px;
+    padding: 50px 20px;
+    margin: 0 auto;
+
+    display: grid;
+    background-color: gray;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.gridContainer a {
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.gridContainer img {
+    max-width: 100%;
+    border-radius: 10px;
+    position: relative;
+    transition: transform 250ms;
+    cursor: pointer;
+}
