@@ -1,0 +1,22 @@
+.container {
+    height: auto;
+    background: #222;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container li {
+    display: inline-block;
+    padding: 0px 30px;
+}
+
+.container li:hover {
+    color: #0088a9;
+}
+
+.container h3 {
+    padding: 0px 20px;
+}

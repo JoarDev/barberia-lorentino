@@ -1,18 +1,13 @@
 import Link from 'next/link';
 import styles from '../styles/Catalogo.module.css'
+import Corte from './Corte';
 
 const Catalogo = ({ cortes }) => {
-
     return (
         <div className={styles.gridContainer}>
             {
-            cortes.map(({slug, foto, titulo}) => (
-                <Link key={slug} href={`/cortes/${slug}`}>
-                    <div>
-                        <a key={titulo}>{titulo}</a>
-                        <img src={foto.url} alt={titulo} />
-                    </div>
-                </Link>
+            cortes.map((corte) => (
+                <Corte corte={corte} />
             ))
             }
         </div>

@@ -1,5 +1,7 @@
 import {gql, GraphQLClient} from 'graphql-request'
 import Catalogo from '../components/Catalogo';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export const getStaticProps = async () => {
   const token = process.env.GRAPH_CMS_TOKEN
@@ -38,7 +40,11 @@ const Home = ({cortes}) => {
   // console.log(cortes[0])
   return (
     // <div>Hello</div>
+    <>
+    <Navbar />
     <Catalogo cortes={cortes}/>
+    <Footer />
+    </>
   )
 }
 

@@ -1,0 +1,28 @@
+.link {
+    padding: 0rem 2rem;
+}
+.link:hover {
+    color: #0088a9;
+}
+
+.boton {
+    padding: 9px 3rem;
+    background-color: rgba(0,136,169,1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.container {
+    height: 60px;
+    background: #222;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boton:hover {
+    background-color: rgba(0,136,169,0.8);
+}
+
