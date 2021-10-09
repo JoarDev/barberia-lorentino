@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styles from '../styles/Catalogo.module.css'
 import Corte from './Corte';
 
@@ -7,7 +6,8 @@ const Catalogo = ({ cortes }) => {
         <div className={styles.gridContainer}>
             {
             cortes.map((corte) => (
-                <Corte corte={corte} />
+                <Corte corte={corte} key={corte.slug}/>
+                //omg next/react really wants you to use the key attribute inside a map
             ))
             }
         </div>

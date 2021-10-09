@@ -6,7 +6,7 @@ export default function Corte({ corte }) {
     //el div dentro del link es porque no se puede tener dos o mas cosas dentro
   return (
     <div key={slug} className={styles.card}>
-      <Link href={`/cortes/${slug}`}>
+      <Link href={`/cortes/${slug}`} >
         <div>
           <img src={foto.url} alt={titulo} />
           <p>(hardcoded) 8  Me gusta</p>
