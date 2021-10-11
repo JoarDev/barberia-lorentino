@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 registerLocale('es', es)
 
-export default function turno() {
+export default function Turno() {
 
     const [barbero, setBarbero] = useState("default")
     const [recorte, setRecorte] = useState("default")
