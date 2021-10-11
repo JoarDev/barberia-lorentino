@@ -1,18 +1,16 @@
-import {gql, GraphQLClient} from 'graphql-request'
+import { gql } from "@apollo/client";
+import client from '../apollo/client';
 import Catalogo from '../components/Catalogo';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-export const getStaticProps = async () => {
-  const token = process.env.GRAPH_CMS_TOKEN
-  const url = process.env.GRAPH_CMS_ENDPOINT
-  const graphcms = new GraphQLClient(url,{
-  headers:{
-    "Authorization": `Bearer ${token}`
-  }})
+//Todo change to getServerSide pRopsss please. dont use api i guess.
+export const getServerSideProps = async () => {
+  // const token = process.env.GRAPH_CMS_TOKEN
+  // const url = process.env.GRAPH_CMS_ENDPOINT
 
   const query = gql`
-  query {
+  query getCortes {
     cortes {
       slug,
       titulo,
@@ -23,12 +21,13 @@ export const getStaticProps = async () => {
   }
   `
 
-  const {cortes} = await graphcms.request(query)
-  // console.log(cortes)
+  const { data } = await client.query({
+    query: query,
+  });
 
   return {
     props:{
-      cortes
+      cortes: data.cortes,
     }
   }
 }
