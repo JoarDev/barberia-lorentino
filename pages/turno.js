@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import styles from "../styles/Turno.module.css";
@@ -9,7 +9,10 @@ registerLocale('es', es)
 
 export default function turno() {
 
+    const [barbero, setBarbero] = useState("default")
+    const [recorte, setRecorte] = useState("default")
     const [startDate, setStartDate] = useState(null)
+    
     const min_tiempo = new Date()
     const max_tiempo = new Date()
     min_tiempo.setHours(10)
@@ -50,14 +53,14 @@ export default function turno() {
           <label>Nombre</label>
           <input type="text" value="hardcoded name" disabled/>
           <label>Barbero</label>
-          <select>
-            <option value="" disabled selected hidden>Seleccione...</option>
+          <select value={barbero} onChange={setBarbero}>
+            <option value="default" disabled hidden>Seleccione...</option>
             <option value="barbero 1">barbero 1</option>
             <option value="barbero 2">barbero 2</option>
           </select>
           <label>Recorte de barba</label>
-          <select>
-            <option value="" disabled selected hidden>Seleccione...</option>
+          <select value={recorte} onChange={setRecorte}>
+            <option value="default" disabled hidden>Seleccione...</option>
             <option value="CON">Con recorte de barba</option>
             <option value="SIN">Sin recorte de barba</option>
           </select>
