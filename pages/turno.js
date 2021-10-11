@@ -78,7 +78,6 @@ export default function Turno() {
           openToDate={open_following_date(new Date())}
           locale="es"
           withPortal
-          showTimeSelect
           dateFormat="d MMMM • h:mm aa"
           >
             <div style={{ color: "red" }}>Las horas que no se pueden seleccionar ya estan reservadas</div>
