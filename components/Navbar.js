@@ -21,9 +21,9 @@ const Navbar = () => {
           <Link href="/perfil">
             <a className={styles.link}>Perfil</a>
           </Link>
-          {user && (
+          {user && (<Link>
             <a href="/api/auth/logout" className={styles.link}>Logout</a>
-          )}
+          </Link>)}
       </div>
       <Link href="/turno">
         <a className={styles.boton}>Sacar turno</a>
