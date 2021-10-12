@@ -6,8 +6,13 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 registerLocale('es', es)
+import { withPageAuthRequired, useUser } from '@auth0/nextjs-auth0';
 
-export default function Turno() {
+// export const getServerSideProps = withPageAuthRequired();
+
+export default withPageAuthRequired(function Turno() {
+
+    const { user } = useUser();
 
     const [barbero, setBarbero] = useState("default")
     const [recorte, setRecorte] = useState("default")
@@ -50,8 +55,8 @@ export default function Turno() {
       <div className={styles.formulario}>
         <h2>Nuevo Turno</h2>
         <form>
-          <label>Nombre</label>
-          <input type="text" value="hardcoded name" disabled/>
+          <label>Email</label>
+          <input type="text" value={user.email} disabled/>
           <label>Barbero</label>
           <select value={barbero} onChange={setBarbero}>
             <option value="default" disabled hidden>Seleccione...</option>
@@ -88,4 +93,4 @@ export default function Turno() {
       <Footer />
     </>
   );
-}
+})

@@ -3,6 +3,8 @@ import client from '../apollo/client';
 import TablaTurnos from "../components/TablaTurnos";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import { withPageAuthRequired, useUser } from '@auth0/nextjs-auth0';
+import InfoUsuario from "../components/InfoUsuario";
 
 export const getServerSideProps = async () => {
   // const token = process.env.GRAPH_CMS_TOKEN
@@ -38,13 +40,22 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default function Perfil({turnos}) {
+export default withPageAuthRequired(function Perfil({turnos}) {
+
+    const { user, error, isLoading } = useUser();
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+
     // console.log(turnos)
     return (
         <>
         <Navbar />
+        {user && (
+            <InfoUsuario user={user}/>
+        )}
         <TablaTurnos turnos={turnos}/>
         <Footer />
         </>
     );
-}
+})

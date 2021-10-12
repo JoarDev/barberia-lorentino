@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
+    "@auth0/nextjs-auth0": "^1.5.0",
     "graphql": "^15.6.0",
     "graphql-request": "^3.5.0",
     "next": "11.1.2",
