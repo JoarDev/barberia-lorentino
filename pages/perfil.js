@@ -1,48 +1,33 @@
 import { gql } from "@apollo/client";
-import client from '../apollo/client';
 import TablaTurnos from "../components/TablaTurnos";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { withPageAuthRequired, useUser } from '@auth0/nextjs-auth0';
 import InfoUsuario from "../components/InfoUsuario";
+import { useEffect, useState } from "react";
 
-export const getServerSideProps = async () => {
-  // const token = process.env.GRAPH_CMS_TOKEN
-  // const url = process.env.GRAPH_CMS_ENDPOINT
-
-  const query = gql`
-    query getTurnosFromClient($email: String) {
-      cliente(where: { email: $email }) {
-        turnos {
-          estado
-          recorte
-          barbero {
-            nombre
-          }
-          fechaHora
-          id
-        }
-      }
-    }
-  `;
-
-  const { data } = await client.query({
-    query: query,
-    variables: {
-        email: "c2@gmail.com"
-    }
-  });
-
-  return {
-    props: {
-      turnos: data.cliente.turnos,
-    },
-  };
-};
-
-export default withPageAuthRequired(function Perfil({turnos}) {
+export default withPageAuthRequired(function Perfil() {
 
     const { user, error, isLoading } = useUser();
+    const [turnos, setTurnos] = useState([])
+
+    useEffect(() => {
+      const fetching = async () => {
+        const response = await fetch('/api/getTurnos',{
+          method: 'POST',
+          body: JSON.stringify({
+            email: user.email
+          })
+        })
+        const body = await response.json()
+        // body.cliente.turnos.map(a => console.log(a))
+        setTurnos(body.cliente.turnos)
+      }
+  
+      fetching()
+    }, [])
+
+    
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;

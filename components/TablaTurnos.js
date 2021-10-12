@@ -13,8 +13,8 @@ const formatHora = (date_string) => {
 export default function TablaTurnos({turnos}) {
     return (
         <div className={styles.container}>
-            <div className={styles.title}>Historial de turnos</div>
-            <div className={styles.headers}>
+            <div key="owo" className={styles.title}>Historial de turnos</div>
+            <div key="ewe" className={styles.headers}>
                 <div>Nombre de Barbero</div>
                 <div>Fecha</div>
                 <div>Hora</div>

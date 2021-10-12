@@ -7,14 +7,47 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 registerLocale('es', es)
 import { withPageAuthRequired, useUser } from '@auth0/nextjs-auth0';
+import { gql } from "@apollo/client";
+import client from '../apollo/client';
 
-// export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = async () => {
 
-export default withPageAuthRequired(function Turno() {
+  const query = gql`
+  query getBarberos {
+    barberos {
+      email
+      nombre
+    }
+  }
+  `
 
+  const { data } = await client.query({
+    query: query,
+  });
+
+  return {
+    props:{
+      barberos: data.barberos,
+    }
+  }
+}
+
+const mutationTurno = gql`
+mutation saveTurno($recorte: Boolean, $fechaHora: DateTime, $estado: EstadoTurno, $cliente_email: String, $barbero_email: String) {
+  __typename
+  createTurno(
+    data: {estado: $estado, recorte: $recorte, fechaHora: $fechaHora, cliente: {connect: {email: $cliente_email}}, barbero: {connect: {email: $barbero_email}}}
+  ) {
+    id
+  }
+}
+`
+
+export default withPageAuthRequired(function Turno({barberos}) {
+  
     const { user } = useUser();
 
-    const [barbero, setBarbero] = useState("default")
+    const [barbero_email, setBarbero_email] = useState("default")
     const [recorte, setRecorte] = useState("default")
     const [startDate, setStartDate] = useState(null)
     
@@ -49,22 +82,52 @@ export default withPageAuthRequired(function Turno() {
     
         return currentDate.getTime() < selectedDate.getTime();
     };
+
+    const saveTurnoAPI = async (recorte_boolean) => {
+      const res = await fetch('/api/saveTurno',{
+        method: 'POST',
+        body: JSON.stringify({variables: {
+            recorte: recorte_boolean,
+            estado: "Reservado",
+            fechaHora: startDate.toISOString(),
+            barbero_email: barbero_email,
+            cliente_email: user.email,
+          }})
+      })
+      const body = await res.json()
+      console.log(body)
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      // console.log(startDate.toISOString())
+      // console.log(barbero_email)
+      // console.log(client)
+      let recorte_boolean = false
+
+      if(recorte == 'CON'){
+        recorte_boolean = true
+      }
+
+      saveTurnoAPI(recorte_boolean)
+    }
   return (
     <>
       <Navbar />
       <div className={styles.formulario}>
         <h2>Nuevo Turno</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Email</label>
           <input type="text" value={user.email} disabled/>
           <label>Barbero</label>
-          <select value={barbero} onChange={setBarbero}>
+          <select value={barbero_email} onChange={(e)=>setBarbero_email(e.target.value)}>
             <option value="default" disabled hidden>Seleccione...</option>
-            <option value="barbero 1">barbero 1</option>
-            <option value="barbero 2">barbero 2</option>
+            {barberos.map((barbero) => (
+              <option key={barbero.email} value={barbero.email}>{barbero.nombre}</option>
+            ))}
           </select>
           <label>Recorte de barba</label>
-          <select value={recorte} onChange={setRecorte}>
+          <select value={recorte} onChange={(e)=>setRecorte(e.target.value)}>
             <option value="default" disabled hidden>Seleccione...</option>
             <option value="CON">Con recorte de barba</option>
             <option value="SIN">Sin recorte de barba</option>
