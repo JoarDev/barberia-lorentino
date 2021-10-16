@@ -21,6 +21,9 @@ const Navbar = () => {
           <Link href="/perfil">
             <a className={styles.link}>Perfil</a>
           </Link>
+          <Link href="/turnos_hoy">
+            <a className={styles.link}>Turnos de hoy</a>
+          </Link>
           {user && (
             <a href="/api/auth/logout" className={styles.link}>Logout</a>
           )}
