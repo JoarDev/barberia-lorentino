@@ -27,7 +27,9 @@ export default withPageAuthRequired(function Perfil() {
       fetching()
     }, [])
 
-    
+    const getPuntaje = () => {
+      return turnos.filter(turno => turno.estado === "Atendido").length
+    }
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
@@ -37,7 +39,7 @@ export default withPageAuthRequired(function Perfil() {
         <>
         <Navbar />
         {user && (
-            <InfoUsuario user={user}/>
+            <InfoUsuario user={user} puntaje={getPuntaje()}/>
         )}
         <TablaTurnos turnos={turnos}/>
         <Footer />
