@@ -9,7 +9,7 @@ export default function Corte({ corte }) {
       <Link href={`/cortes/${slug}`} >
         <div>
           <img src={foto.url} alt={titulo} />
-          <p>(hardcoded) 8  Me gusta</p>
+          <h3>{titulo}</h3>
         </div>
       </Link>
     </div>
